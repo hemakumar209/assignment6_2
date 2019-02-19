@@ -1,0 +1,68 @@
+1. Use the given link below and locate the bank marketing dataset. Data Set Link
+Perform the below operations:
+a. Is there any association between Job and default?
+   Ans:
+     >zip.url1<-"http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip"
+     >temp1<-tempfile()
+     >download.file(zip.url1,temp1)
+     >myfile<-data.frame(read.csv(unz(temp1,"bank-additional.csv"),sep = ";"))
+     >head(myfile)
+
+     >job<-as.numeric(myfile$job)
+     >default<-as.numeric(myfile$default)
+     >cor(job,default)
+
+     >bartable = table(myfile$job, myfile$default)  
+     >barplot(bartable, beside = TRUE, legend =levels(unique(myfile$job)))
+
+    #allthe employes have default no and unknown only one employee is with yes
+
+
+b. Is there any significant difference in duration of last call between people having housing loan or not?
+   Ans:
+    >ordering<-c("yes","no","unknown")
+    > mydata$housing <- as.numeric(factor(myfile$housing , levels = ordering))
+    > str(mydata)
+
+    > aModel <- aov(housing ~ duration,data=mydata)
+    > summary(aModel)
+    >aModel$coefficients
+
+    Result: 
+                   Df Sum Sq Mean Sq F value Pr(>F)
+     duration       1    0.1 0.06864   0.228  0.633
+     Residuals   4117 1239.7 0.30111
+
+     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+c. Is there any association between consumer price index and consumer?
+
+   ans:
+     there is no association between consumer price index and consumer
+     as there is no customer column in the data set
+
+
+
+d. Is the employment variation rate consistent across job types?
+  Ans:
+    >bartable = table(myfile$emp.var.rate, myfile$job)  
+    >barplot(bartable, beside = TRUE, legend =levels(unique(myfile$emp.var.rate)))
+
+    # by seeing the plot we can say that  different jobs all the employees have 
+      different employment variation rates they are not consistent across job types.
+
+e. Is the employment variation rate same across education?
+    Ans:
+     >bartable = table(myfile$emp.var.rate , myfile$education)  
+     >barplot(bartable, beside = TRUE, legend =levels(unique(myfile$emp.var.rate)))
+   
+     
+    # by seeing the plot we can say that  different educations the employment variation rates   
+      are different they are not same.
+   
+f. Which group is more confident??
+  Ans:
+
+     university.degree holders has more employment variation rates
+     they are more confident
